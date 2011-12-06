@@ -8,6 +8,9 @@ package
     import com.brightcove.api.dtos.VideoDTO;
     import com.brightcove.api.events.MediaEvent;
     import com.brightcove.api.events.PropertyChangeEvent;
+	import com.brightcove.api.APIModules;
+	import com.brightcove.api.CustomModule;
+	import com.brightcove.api.modules.ContentModule;
     import com.brightcove.api.modules.ExperienceModule;
     import com.brightcove.api.modules.VideoPlayerModule;
     
@@ -16,6 +19,11 @@ package
     import flash.display.Stage;
     import flash.events.TimerEvent;
     import flash.utils.Timer;
+	import flash.net.*;
+	import flash.system.Security;
+	import flash.text.TextField;
+	
+	Security.allowDomain("admin.brightcove.com");
     
     /**
      * Rendition selector.
@@ -62,6 +70,8 @@ package
         private var _defaultChoice:String;
         private var _currentVideo:VideoDTO;
         private var _tim:Timer;
+		
+		Security.allowDomain("admin.brightcove.com");
         
         /**
          * Loader/overlay - overview
@@ -87,6 +97,7 @@ package
         {
             _experienceModule = player.getModule(APIModules.EXPERIENCE) as ExperienceModule;
             _videoPlayerModule = player.getModule(APIModules.VIDEO_PLAYER) as VideoPlayerModule;
+			Security.allowDomain("admin.brightcove.com");
             
             debug("initializing rendition selector plugin");
             
@@ -117,6 +128,14 @@ package
                 
                 drawOverlay();
             }
+			var textLabel:TextField = new TextField()
+			stage.addChild( textLabel);
+			textLabel.text = "Added to Stage";
+			textLabel.textColor = 0xFFFFFF;
+			textLabel.x = 10;
+			textLabel.y = 5;
+			textLabel.selectable = false;
+			textLabel.visible = true; 
         }
         
         /**
@@ -126,6 +145,7 @@ package
         private function start():void
         {
             _stage = _experienceModule.getStage();
+			Security.allowDomain("admin.brightcove.com");
             
             _currentVideo = _videoPlayerModule.getCurrentVideo();
             
